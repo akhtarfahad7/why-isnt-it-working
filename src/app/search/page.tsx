@@ -153,17 +153,24 @@ function SearchResults() {
           <p className="text-gray-600 mb-4">
             No matching problems found for &quot;{query}&quot;
           </p>
+        </div>
+      )}
+
+      {query && !loading && (
+        <div className="mt-8 text-center">
           <div className="rounded-lg bg-blue-50 border border-blue-200 p-6 max-w-md mx-auto">
             <p className="text-blue-800 font-medium mb-2">
-              Want AI to diagnose this problem?
+              {results.length > 0
+                ? "Not what you're looking for?"
+                : "Want AI to diagnose this problem?"}
             </p>
             <p className="text-sm text-blue-700 mb-4">
-              Our AI can generate a custom diagnostic tree for your specific issue.
+              Let AI generate a custom diagnostic tree for your specific issue.
             </p>
             <button
               onClick={handleAIDiagnostic}
               disabled={aiGenerating}
-              className="rounded-lg bg-blue-600 px-6 py-2 text-white font-medium hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2"
+              className="rounded-lg bg-blue-600 px-6 py-2 text-white font-medium hover:bg-blue-700 disabled:opacity-50 flex items-center gap-2 mx-auto"
             >
               {aiGenerating ? (
                 <>
