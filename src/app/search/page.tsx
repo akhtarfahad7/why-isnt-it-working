@@ -165,7 +165,7 @@ function SearchResults() {
                 : "Want AI to diagnose this problem?"}
             </p>
             <p className="text-sm text-blue-700 mb-4">
-              Let AI generate a custom diagnostic tree for your specific issue.
+              Our AI can generate a custom diagnostic tree for your specific problem.
             </p>
             <button
               onClick={handleAIDiagnostic}

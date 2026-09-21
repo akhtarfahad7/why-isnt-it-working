@@ -1,6 +1,6 @@
 # Why Isn't It Working? - Session History
 ## Date: September 21, 2026
-## Last Updated: Phase 7 - Diagnostic Engine Fix Complete
+## Last Updated: Phase 8 - Deployment + AI Button Fix
 
 ---
 
@@ -393,3 +393,33 @@ tests/engine.test.ts             ← Updated for new AnsweredNode type
 - Focus: Core diagnostic experience fix
 - Status: All 6 tasks completed successfully
 - Key Achievement: Diagnostic engine now accurate, back button added, progress bar fixed
+
+---
+
+## Phase 8: Deployment & Deployment Fixes
+
+### What was done:
+1. **Git Repository Initialized** - First commit with all code
+2. **GitHub Push** - Repository `akhtarfahad7/why-isnt-it-working`
+3. **Vercel Deployment** - Deployed via Vercel CLI
+4. **Fixed @types/node** - Updated ^20 → ^22 to fix npm install failure on Vercel
+5. **Fixed AI Button Visibility** - Now always shows on search page (not just when 0 results)
+
+### Files modified:
+```
+package.json                        ← @types/node ^20 → ^22
+src/app/search/page.tsx             ← AI button always visible
+```
+
+### Deployment Info:
+- **Platform:** Vercel
+- **Repo:** https://github.com/akhtarfahad7/why-isnt-it-working
+- **Plan:** Hobby (free)
+- **AI Provider:** Google Gemini (free tier)
+- **Auto-deploy:** On push to main
+
+### Session Notes:
+- Date: September 21, 2026
+- Duration: ~30 minutes
+- Focus: Deployment + fix AI button visibility
+- Status: Successfully deployed and live

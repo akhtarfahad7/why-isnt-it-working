@@ -1,0 +1,50 @@
+
+26udcfl79ixtv.js19 Deprecated API for given entry type.
+(anonymous) @ 26udcfl79ixtv.js19
+e62b3a9e28ed8bcaevent1  Failed to load resource the server responded with a status of 400 ()
+120Tracking Prevention blocked access to storage for URL.
+356The resource URL was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+ [224351] ERROR Unable to obtain channel secret for broadcast system
+(anonymous) @ inpage.js1
+ [224358] ERROR Unable to find node id to create broadcast system Error Channel secret not available yet
+    at ExtendedBroadcastMessage.initBroadcastMessage (inpage.js174239)
+    at ExtendedBroadcastMessage.loadBroadcastMessage (inpage.js173059)
+(anonymous) @ inpage.js1
+ [224358] ERROR Error Broadcast channel unavailable
+    at ExtendedBroadcastMessage.emit (inpage.js174519)
+    at async TonAdapter.start (inpage.js12097731)
+(anonymous) @ inpage.js1
+ [224358] ERROR Error Broadcast channel unavailable
+    at ExtendedBroadcastMessage.emit (inpage.js174519)
+    at async SolanaAdapter.setDefaultWallet (inpage.js11593861)
+    at async SolanaAdapter.start (inpage.js11592627)
+(anonymous) @ inpage.js1
+ [224358] ERROR Error Broadcast channel unavailable
+    at ExtendedBroadcastMessage.emit (inpage.js174519)
+    at async TronAdapter.setConnectionUrl (inpage.js13078240)
+    at async TronAdapter.start (inpage.js13078366)
+(anonymous) @ inpage.js1
+ [224358] ERROR Error Broadcast channel unavailable
+    at ExtendedBroadcastMessage.emit (inpage.js174519)
+    at async BitcoinAdapter.setDefaultWallet (inpage.js1135760)
+    at async BitcoinAdapter.start (inpage.js1134702)
+(anonymous) @ inpage.js1
+ [224358] ERROR Error Broadcast channel unavailable
+    at ExtendedBroadcastMessage.emit (inpage.js174519)
+    at async EthereumAdapter.setChainId (inpage.js11201153)
+    at async Promise.all (index 0)
+(anonymous) @ inpage.js1
+ [224358] ERROR Error Broadcast channel unavailable
+    at ExtendedBroadcastMessage.emit (inpage.js174519)
+    at async EthereumAdapter.setDefaultEthereumWallet (inpage.js11201042)
+(anonymous) @ inpage.js1
+ [224358] ERROR Error Broadcast channel unavailable
+    at ExtendedBroadcastMessage.emit (inpage.js174519)
+    at async Web3RpcProvider.call (inpage.js179710)
+    at async BinanceInjectedProvider.boot (inpage.js181452)
+(anonymous) @ inpage.js1
+ [224418] ERROR Unable to find node id to create broadcast system Error Channel secret not available yet
+    at ExtendedBroadcastMessage.initBroadcastMessage (inpage.js174239)
+    at ExtendedBroadcastMessage.loadBroadcastMessage (inpage.js173059)
+(anonymous) @ inpage.js1
+e62b3a9e28ed8bcaevent1  Failed to load resource the server responded with a status of 400 ()
