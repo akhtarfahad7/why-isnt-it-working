@@ -1,0 +1,23 @@
+export const synonyms: Record<string, string[]> = {
+  // English synonyms
+  battery: ["cell", "power source", "accumulator", "charge"],
+  screen: ["display", "monitor", "panel", "lcd", "oled", "touchscreen"],
+  internet: ["web", "online", "connection", "network", "wifi", "broadband"],
+  slow: ["lagging", "sluggish", "hanging", "freezing", "delayed", "dhima", "ruk ruk ke chalta hai"],
+  broken: ["damaged", "cracked", "not working", "faulty", "defective", "toot gaya", "kharab", "bigad gaya", "band"],
+  noise: ["sound", "buzzing", "clicking", "grinding", "humming", "whining", "awaaz", "shor", "ghamghamahat"],
+  heat: ["hot", "overheating", "warm", "burning", "garam", "jal raha hai", "garmi"],
+  cold: ["not cooling", "warm air", "no cooling", "thanda nahi", "cooling nahi"],
+  charge: ["charging", "power", "plug in", "recharge", "bijli"],
+  start: ["turn on", "boot", "power on", "startup", "start nahi", "on nahi", "chalu nahi"],
+  connect: ["connection", "pairing", "link", "attach", "connect nahi", "link nahi"],
+  print: ["printing", "print out", "hardcopy"],
+  drain: ["draining", "empty", "water not going", "paani nahi ja raha"],
+  block: ["blocked", "clogged", "jammed", "stuck", "ruk gaya", "band hai"],
+  leak: ["leaking", "dripping", "water coming", "tapak raha"],
+  sound: ["audio", "volume", "speaker", "hear", "awaaz nahi", "sunai nahi de raha"],
+  display: ["show", "appear", "visible", "screen"],
+  run: ["working", "functioning", "operating"],
+  fix: ["repair", "solve", "resolve", "patch"],
+  error: ["problem", "issue", "bug", "glitch", "fault", "dikkat", "masla"],
+};

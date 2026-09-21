@@ -1,0 +1,572 @@
+# AGENTS.md
+
+## Project
+
+Project name: **Why Isn't It Working?**
+
+A search-driven diagnostic web application that helps users understand why everyday technology, appliances, and vehicles are not working.
+
+Core promise:
+
+> Tell us what's not working. We'll help you figure out why.
+
+The product is NOT intended to replace qualified technicians, electricians, mechanics, or other professionals.
+
+---
+
+## Primary Product Principles
+
+1. **Useful before clever**
+
+   * Solve the user's actual problem.
+   * Do not add unnecessary AI features.
+
+2. **Diagnostic knowledge is the source of truth**
+
+   * Diagnostic trees, causes, symptoms, safety rules, and recommendations must come from structured application data.
+   * AI must not invent diagnostic branches or safety instructions.
+
+3. **Safety first**
+
+   * Never encourage dangerous electrical, mechanical, gas, battery, chemical, or other hazardous procedures.
+   * Clearly identify when the user should stop and contact a qualified professional.
+
+4. **SEO is a product feature**
+
+   * Every useful problem should have a genuinely useful landing page.
+   * Do not generate thin programmatic SEO pages.
+
+5. **Mobile-first**
+
+   * Most diagnostic sessions may happen from a phone.
+   * Important actions should be easy to perform with one hand.
+
+6. **Simple architecture**
+
+   * Prefer simple, maintainable solutions.
+   * Avoid unnecessary dependencies and abstractions.
+
+7. **Production quality**
+
+   * TypeScript strict mode.
+   * Proper loading, error, empty, and not-found states.
+   * Accessible UI.
+   * Responsive design.
+   * Secure environment variable handling.
+
+---
+
+# Technology Stack
+
+Use:
+
+* Next.js
+* TypeScript
+* Tailwind CSS
+* Supabase
+* PostgreSQL
+* Vercel
+* Git
+* An AI provider through an abstraction layer
+
+Prefer the latest stable versions available when the project is created.
+
+Do not introduce another framework unless there is a strong technical reason.
+
+---
+
+# Development Rules
+
+## TypeScript
+
+* Use strict TypeScript.
+* Avoid `any`.
+* Prefer explicit types for public functions.
+* Keep shared types in appropriate modules.
+* Do not duplicate types unnecessarily.
+
+## React / Next.js
+
+* Use the App Router.
+* Prefer Server Components by default.
+* Use Client Components only when interaction requires them.
+* Do not make the entire application a Client Component.
+* Keep business logic outside UI components.
+
+## Styling
+
+* Use Tailwind CSS.
+* Mobile-first.
+* Keep visual design clean and practical.
+* Avoid excessive animations.
+* Avoid unnecessary UI libraries.
+
+## Components
+
+Create reusable components when they provide real value.
+
+Examples:
+
+* ProblemCard
+* DiagnosticQuestion
+* AnswerButton
+* DiagnosisProgress
+* DiagnosisResult
+* SafetyWarning
+* CauseCard
+* RelatedProblems
+* SearchBox
+
+Do not create abstractions merely to reduce file length.
+
+---
+
+# Folder Architecture
+
+Prefer this structure:
+
+```text
+app/
+  page.tsx
+  problems/
+  categories/
+  search/
+  admin/
+  about/
+  safety/
+  contact/
+  privacy/
+  terms/
+  disclaimer/
+
+components/
+
+lib/
+  ai/
+  db/
+  diagnostic/
+  safety/
+  seo/
+  search/
+
+data/
+  problems/
+
+supabase/
+  migrations/
+
+tests/
+
+public/
+
+AGENTS.md
+PRD.md
+ARCHITECTURE.md
+DATABASE.md
+SEO.md
+SAFETY.md
+```
+
+Adjust the structure only when there is a clear reason.
+
+---
+
+# Diagnostic Engine Rules
+
+The diagnostic engine is one of the most important parts of the product.
+
+The engine must be deterministic.
+
+Basic flow:
+
+```text
+User problem
+    ↓
+Problem identification
+    ↓
+Diagnostic tree
+    ↓
+Question
+    ↓
+User answer
+    ↓
+Next node
+    ↓
+More questions
+    ↓
+Cause scoring
+    ↓
+Safety rules
+    ↓
+Diagnosis result
+```
+
+The engine must NOT:
+
+* invent questions
+* invent causes
+* invent safety procedures
+* invent diagnostic branches
+* fabricate certainty
+* fabricate probabilities
+* provide unsupported repair instructions
+
+If a diagnostic tree does not contain a branch, the AI must not create one.
+
+---
+
+# Diagnostic Result Language
+
+Do not say:
+
+> "This is definitely the problem."
+
+Prefer:
+
+> "The most likely cause is..."
+
+or:
+
+> "This result points most strongly to..."
+
+or:
+
+> "Based on your answers, this is a possible cause."
+
+The system should communicate uncertainty honestly.
+
+---
+
+# Cause Scoring
+
+Initial scoring may use a simple deterministic points system.
+
+Example:
+
+```text
+Symptom A → Cause 1 +3
+Symptom B → Cause 1 +2
+Symptom C → Cause 2 +3
+Condition D → Cause 1 -1
+```
+
+The final result can classify causes as:
+
+* Most likely
+* Possible
+* Less likely
+
+These are diagnostic classifications, NOT statistical probabilities.
+
+Do not display fake percentages such as:
+
+> 87% chance battery failure
+
+unless a future version has a genuine validated statistical model.
+
+---
+
+# AI Rules
+
+AI should be treated as a supporting layer.
+
+Potential functions:
+
+```text
+classifyProblem()
+normalizeSymptoms()
+explainDiagnosis()
+answerFollowUp()
+summarizeResult()
+```
+
+AI may:
+
+* understand natural-language user input
+* map wording to existing problems
+* normalize symptoms
+* explain an existing diagnosis
+* answer questions using existing knowledge
+* improve readability
+
+AI may NOT:
+
+* override safety rules
+* create unsupported diagnostic branches
+* invent technical facts
+* invent repair procedures
+* bypass the diagnostic engine
+* claim certainty when the data is uncertain
+
+The application must continue working for core diagnosis even if the AI provider is unavailable.
+
+---
+
+# Safety System
+
+Every diagnostic recommendation must have an appropriate safety level.
+
+Use:
+
+```text
+SAFE
+CAUTION
+HIGH
+STOP
+```
+
+Examples:
+
+### SAFE
+
+Actions that do not expose the user to meaningful danger.
+
+### CAUTION
+
+Actions that require reasonable care.
+
+### HIGH
+
+Potentially dangerous actions that should normally be performed by qualified people.
+
+### STOP
+
+The user should stop troubleshooting and seek professional help.
+
+For electrical systems, mains electricity, gas appliances, vehicle fuel systems, high-voltage batteries, refrigerants, or similar hazards, never provide instructions that could reasonably expose an inexperienced user to serious injury.
+
+---
+
+# Database Rules
+
+Use Supabase/PostgreSQL.
+
+Expected major entities:
+
+```text
+categories
+problems
+symptoms
+diagnostic_trees
+diagnostic_nodes
+diagnostic_answers
+causes
+recommendations
+safety_rules
+related_problems
+users
+diagnoses
+diagnosis_answers
+diagnosis_results
+analytics_events
+```
+
+Database migrations must be version controlled.
+
+Never manually depend on undocumented database changes.
+
+---
+
+# SEO Rules
+
+Every problem page should have:
+
+* unique title
+* unique meta description
+* canonical URL
+* Open Graph metadata
+* useful H1
+* meaningful introductory content
+* symptoms
+* diagnostic tool
+* safety information
+* related problems
+* appropriate structured data
+
+Example:
+
+```text
+/problems/laptop-wont-charge/
+```
+
+Do not create pages solely by swapping keywords.
+
+Every indexed page must provide real user value.
+
+---
+
+# Accessibility
+
+Follow basic WCAG principles.
+
+Requirements:
+
+* keyboard accessible controls
+* visible focus states
+* sufficient contrast
+* semantic HTML
+* proper labels
+* accessible buttons
+* meaningful headings
+* no information conveyed only through color
+
+Interactive diagnostic answers must be usable without a mouse.
+
+---
+
+# Security
+
+Never expose:
+
+* API keys
+* Supabase service-role keys
+* private credentials
+* secrets
+* database credentials
+
+Use environment variables.
+
+Client-side code must never receive server-only secrets.
+
+Validate user input.
+
+Do not trust client-side diagnostic results.
+
+---
+
+# Error Handling
+
+Every important route should handle:
+
+* loading state
+* error state
+* empty state
+* not-found state
+
+Do not silently swallow errors.
+
+Errors should be logged appropriately without exposing sensitive information to users.
+
+---
+
+# Testing
+
+At minimum, test:
+
+* diagnostic tree traversal
+* answer handling
+* cause scoring
+* safety rule application
+* invalid diagnostic node handling
+* problem page rendering
+* basic search
+* important API/server functions
+
+Do not consider a feature complete merely because the page visually works.
+
+---
+
+# Git Rules
+
+Make small logical commits.
+
+Preferred style:
+
+```text
+feat: add diagnostic engine
+feat: add laptop charging problem
+feat: add problem page SEO
+fix: handle missing diagnostic node
+refactor: simplify diagnosis scoring
+```
+
+Do not make giant commits containing unrelated changes.
+
+---
+
+# Dependency Rules
+
+Before installing a package:
+
+1. Check whether the functionality can be implemented with existing tools.
+2. Check whether the package is actively maintained.
+3. Prefer established packages.
+4. Avoid dependency bloat.
+
+Do not install packages simply because they are popular.
+
+---
+
+# Code Quality
+
+Before declaring a milestone complete:
+
+1. Run type checking.
+2. Run linting.
+3. Run tests.
+4. Run production build.
+5. Fix errors.
+6. Verify important pages manually.
+
+Do not say "done" if the build is failing.
+
+---
+
+# Agent Behavior
+
+When working on this project:
+
+1. Inspect the existing repository before changing files.
+2. Read relevant documentation first.
+3. Do not overwrite working code unnecessarily.
+4. Make the smallest change that solves the task.
+5. Explain important architectural decisions.
+6. Ask for clarification only when genuinely blocked.
+7. Never fabricate successful test results.
+8. Never claim deployment succeeded unless it was actually verified.
+9. Never remove existing functionality without explicit justification.
+10. Keep the project runnable after each milestone.
+
+---
+
+# MVP Scope
+
+The first MVP should focus on three real problems:
+
+1. Laptop Won't Charge
+2. Wi-Fi Keeps Disconnecting
+3. Car Won't Start
+
+Build the architecture so additional problems can be added through structured data rather than rewriting application logic.
+
+---
+
+# Important Product Constraint
+
+Do NOT build this as merely:
+
+> "An AI chatbot that tells users what's wrong."
+
+Build it as:
+
+> "A structured diagnostic engine with AI assistance."
+
+The diagnostic knowledge base and decision tree are the foundation.
+
+---
+
+# Definition of Done
+
+A feature is complete only when:
+
+* implementation exists
+* UI works
+* TypeScript passes
+* lint passes
+* tests pass where applicable
+* production build succeeds
+* error states are handled
+* responsive behavior is checked
+* security considerations are addressed
+* SEO is addressed for public pages
+* documentation is updated where necessary
