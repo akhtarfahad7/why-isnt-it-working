@@ -1,6 +1,6 @@
 # Why Isn't It Working? - Session History
 ## Date: September 21, 2026
-## Last Updated: Phase 9 - AI Diagnostic Fix (Gemini API Working)
+## Last Updated: Phase 9b - SEO Overhaul & Google Search Console Verified
 
 ---
 
@@ -324,20 +324,21 @@ npm run dev
 
 ## Future Enhancements (Not Yet Implemented)
 1. ~~Supabase database connection~~ → Schema ready, `.env.local` configured, needs live database
-2. User accounts and session persistence
-3. Admin panel for managing problems
-4. Analytics dashboard
-5. Community-contributed problems
-6. Multi-language support (Hindi, Urdu)
-7. Mobile app (React Native)
+2. ~~SEO Overhaul~~ → Complete, ownership verified
+3. User accounts and session persistence
+4. Admin panel for managing problems
+5. Analytics dashboard
+6. Community-contributed problems
+7. Multi-language support (Hindi, Urdu)
+8. Mobile app (React Native)
 
 ---
 
-## Session ended successfully.
+## Session ended successfully. ✅
 
 ---
 
-## Phase 7: Diagnostic Engine Fix (Core Experience)
+## Phase 9b: SEO Overhaul & Google Search Console
 
 ### What was built:
 1. **Fixed Scoring Bug** - Engine now tracks `{nodeId, answerId}` pairs instead of just node IDs. Only selected answers' causeScores are counted, not all answers on visited nodes.
@@ -477,3 +478,68 @@ vercel.json                         ← maxDuration 60 → 90
 ### Session Notes:
 - Date: September 22, 2026
 - Status: All issues resolved, AI diagnostic working on live site
+
+---
+
+## Phase 9b: SEO Overhaul & Google Search Console
+
+### Date: September 22, 2026
+### Focus: Get site ranking on Google's first page
+
+### What was done:
+1. **Fixed NEXT_PUBLIC_BASE_URL** - Changed from `http://localhost:3000` → `https://why-isnt-it-working.vercel.app`
+2. **Fixed GEMINI_MODEL** - Changed from `gemini-2.0-flash` → `gemini-3.1-flash-lite` in .env.local
+3. **Added Blog System** - 12 articles with long-form content, FAQ sections
+4. **Added FAQ Page** - 15 questions with FAQPage schema for rich snippets
+5. **Added Category Detail Pages** - `/categories/[slug]` with CollectionPage schema
+6. **Fixed Structured Data** - All URLs now absolute (not relative)
+7. **Added Article + FAQ Schemas** - Components for blog articles
+8. **Added OpenGraph + Twitter Cards** - All pages have OG meta tags
+9. **Added Canonical URLs** - Prevents duplicate content
+10. **Added Keywords Meta Tags** - Better keyword targeting
+11. **Updated Sitemap** - Includes blog, FAQ, category pages
+12. **Homepage Blog Section** - Links to blog articles
+13. **Navigation Updated** - Blog + FAQ links in nav
+
+### Blog Articles Created:
+1. Laptop Not Charging
+2. Phone Overheating
+3. Car Won't Start
+4. WiFi Disconnecting
+5. AC Not Cooling
+6. Computer Running Slow
+7. Phone Battery Draining
+8. Microwave Not Heating
+9. Car AC Not Working
+10. Internet Not Working
+11. Car Brakes Squealing
+12. Washing Machine Not Draining
+
+### Files Created:
+```
+src/app/blog/page.tsx
+src/app/blog/[slug]/page.tsx
+src/app/faq/page.tsx
+src/data/blog.ts
+src/components/ArticleStructuredData.tsx
+src/components/FAQStructuredData.tsx
+```
+
+### Files Modified:
+```
+src/app/layout.tsx           ← Google verification meta tag, nav links
+src/app/page.tsx             ← Blog links section
+src/app/sitemap.ts           ← Blog + FAQ entries
+src/app/categories/[slug]/page.tsx
+src/app/categories/page.tsx  ← Improved metadata
+src/components/StructuredData.tsx ← Article + FAQ schemas
+```
+
+### Google Search Console Status:
+- ✅ Ownership verified (HTML tag method)
+- ⏳ Daily quota exceeded - wait 24-48 hours
+- Next: Submit sitemap + request indexing
+
+### Session Notes:
+- Date: September 22, 2026
+- Status: SEO complete, ownership verified, awaiting quota reset
