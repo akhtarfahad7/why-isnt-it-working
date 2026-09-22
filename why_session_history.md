@@ -1,6 +1,6 @@
 # Why Isn't It Working? - Session History
 ## Date: September 21, 2026
-## Last Updated: Phase 8 - Deployment + AI Button Fix
+## Last Updated: Phase 9 - AI Diagnostic Fix (Gemini API Working)
 
 ---
 
@@ -423,3 +423,57 @@ src/app/search/page.tsx             ← AI button always visible
 - Duration: ~30 minutes
 - Focus: Deployment + fix AI button visibility
 - Status: Successfully deployed and live
+
+---
+
+## Phase 9: AI Diagnostic Fix (Gemini API Working)
+
+### Date: September 22, 2026
+### Duration: ~45 minutes
+### Focus: Fix AI diagnostic button not working on deployed site
+
+### What was broken:
+- "Generate AI Diagnostic" button clicked but showed "AI could not generate a complete diagnostic tree. Showing generic guidance."
+- API was returning `source: "fallback"` instead of `source: "ai"`
+
+### Root Causes Found (3 issues):
+
+1. **Wrong Gemini Model Name** - `gemini-2.0-flash` was deprecated/removed by Google. Error: `"This model is no longer available"`
+2. **Wrong API Key Format** - Google changed API key format from `AIzaSy...` to `AQ.Ab8R...` for new keys. Key format was fine, but older models blocked new keys.
+3. **Wrong Auth Method** - Used `?key=` query parameter. Google now requires `x-goog-api-key` header.
+4. **High Demand (503)** - Model `gemini-3.1-flash-lite` was under high demand, needed retry logic.
+
+### What was fixed:
+1. **Model updated** → `gemini-2.0-flash` → `gemini-3.1-flash-lite` (works with new AQ-format keys)
+2. **Auth method fixed** → `?key=` query param → `x-goog-api-key` header
+3. **Retry logic added** → 5 retries with AbortController (15s timeout per attempt) on 503 errors
+4. **Vercel timeout increased** → 60s → 90s to allow all retries
+5. **Error message near button** → User now sees error inline, not just at top of page
+6. **Fallback redirect fixed** → AI button now redirects even on fallback (tree still shows)
+
+### Files modified:
+```
+src/lib/ai/provider.ts              ← Model name, x-goog-api-key header, 5 retries with AbortController
+src/lib/ai/dynamic-diagnostic.ts    ← Debug logging (cleaned after fix)
+src/app/search/page.tsx             ← Error shown near button, fallback redirect
+vercel.json                         ← maxDuration 60 → 90
+```
+
+### Key Learnings:
+- Google Gemini API key format changed in 2026: new keys start with `AQ.Ab8R...` (not `AIzaSy...`)
+- Old models (`gemini-2.0-flash`, `gemini-2.5-flash`) are not available to new API key holders
+- New keys need `gemini-3.1-flash-lite` or newer
+- Gemini API uses `x-goog-api-key` header (not query parameter)
+- Google models experience high demand (503 errors) - retry logic is essential
+- Vercel serverless functions need adequate timeout for AI API calls
+
+### Final Status:
+- ✅ AI Diagnostic fully working on production
+- ✅ Search works
+- ✅ AI button generates real-time diagnostic trees via Gemini
+- ✅ 5 retries handle temporary 503 overload
+- ✅ Production URL: https://why-isnt-it-working.vercel.app
+
+### Session Notes:
+- Date: September 22, 2026
+- Status: All issues resolved, AI diagnostic working on live site
