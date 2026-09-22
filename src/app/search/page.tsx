@@ -80,7 +80,7 @@ function SearchResults() {
       });
       const data = await res.json();
 
-      if (data.source === "ai" && data.problem?.slug) {
+      if (data.problem?.slug) {
         router.push(`/problems/${data.problem.slug}?ai=true&q=${encodeURIComponent(query)}`);
       } else {
         setError(data.message || "Could not generate diagnostic for this query.");
@@ -167,6 +167,11 @@ function SearchResults() {
             <p className="text-sm text-blue-700 mb-4">
               Our AI can generate a custom diagnostic tree for your specific problem.
             </p>
+            {error && (
+              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-3">
+                <p className="text-sm text-red-700">{error}</p>
+              </div>
+            )}
             <button
               onClick={handleAIDiagnostic}
               disabled={aiGenerating}
