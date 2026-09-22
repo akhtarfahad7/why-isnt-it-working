@@ -34,7 +34,7 @@ class GeminiProvider implements AIProvider {
 
   constructor() {
     this.apiKey = process.env.GOOGLE_AI_API_KEY ?? "";
-    this.model = process.env.GEMINI_MODEL ?? "gemini-2.5-flash-lite";
+    this.model = process.env.GEMINI_MODEL ?? "gemini-3.5-flash-lite";
   }
 
   async chat(messages: AIMessage[]): Promise<AIResponse> {
