@@ -34,7 +34,7 @@ class GeminiProvider implements AIProvider {
 
   constructor() {
     this.apiKey = process.env.GOOGLE_AI_API_KEY ?? "";
-    this.model = process.env.GEMINI_MODEL ?? "gemini-3.6-flash";
+    this.model = process.env.GEMINI_MODEL ?? "gemini-2.5-flash-lite";
   }
 
   async chat(messages: AIMessage[]): Promise<AIResponse> {
@@ -55,11 +55,14 @@ class GeminiProvider implements AIProvider {
         parts: [{ text: m.content }],
       }));
 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent`;
 
       const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": this.apiKey,
+        },
         body: JSON.stringify({
           contents,
           systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined,
