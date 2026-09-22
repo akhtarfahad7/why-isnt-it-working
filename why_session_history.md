@@ -543,3 +543,39 @@ src/components/StructuredData.tsx ← Article + FAQ schemas
 ### Session Notes:
 - Date: September 22, 2026
 - Status: SEO complete, ownership verified, awaiting quota reset
+
+---
+
+## Phase 9c: Monetization & Traffic Strategy
+
+### Date: September 22, 2026
+### Focus: Revenue plan and traffic generation
+
+### Monetization Plan:
+| Method | When | Expected Earning |
+|--------|------|-----------------|
+| Google AdSense | 6 months (10K+ visitors) | $250-750/month |
+| Affiliate links | 3 months | $100-300/month |
+| Sponsored content | 6 months | $50-200/article |
+| YouTube shorts | 3 months | $50-200/month |
+
+### Traffic Strategy Created:
+- File: `why_assets/traffic_strategy.md`
+- Reddit: r/techsupport, r/DIY, r/cars, r/HomeImprovement
+- Quora: Answer troubleshooting questions with site link
+- Facebook: Tech support and DIY groups
+- Daily time: 30-45 minutes
+- Rule: 80% helpful, 20% promotion
+
+### Remaining Steps:
+1. ⏳ Google Search Console quota reset (24-48 hours)
+2. 📝 Submit sitemap + request indexing
+3. 📱 Start Reddit/Quora daily (30 min)
+4. 📊 Add Google Analytics (optional)
+5. ✍️ Write 1-2 blog articles per month
+6. 💰 Apply for AdSense after 10K visitors
+
+### Session Notes:
+- Date: September 22, 2026
+- Status: All phases complete, ready for traffic building
+- Session ended successfully
