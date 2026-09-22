@@ -19,12 +19,33 @@ export async function generateMetadata({
   const problem = getProblemBySlug(slug);
   if (!problem) return { title: "Problem Not Found" };
 
+  const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://why-isnt-it-working.vercel.app";
+
   return {
     title: problem.metaTitle,
     description: problem.metaDescription,
+    keywords: [
+      problem.title.toLowerCase(),
+      ...problem.symptoms.map((s) => s.toLowerCase()),
+      "troubleshooting",
+      "diagnostic",
+      "fix",
+      "repair",
+      "why isn't it working",
+    ],
     openGraph: {
       title: problem.metaTitle,
       description: problem.metaDescription,
+      type: "website",
+      url: `${SITE_URL}/problems/${problem.slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: problem.metaTitle,
+      description: problem.metaDescription,
+    },
+    alternates: {
+      canonical: `${SITE_URL}/problems/${problem.slug}`,
     },
   };
 }

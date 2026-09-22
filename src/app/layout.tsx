@@ -13,29 +13,67 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://why-isnt-it-working.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Why Isn't It Working? - Tech Diagnostic Tool",
+    default: "Why Isn't It Working? - Tech Diagnostic & Troubleshooting Tool",
     template: "%s | Why Isn't It Working?",
   },
   description:
-    "Tell us what's not working. We'll help you figure out why. Diagnostic tool for laptops, Wi-Fi, vehicles, and more.",
+    "Tell us what's not working and we'll help you figure out why. Free diagnostic tool for laptops, phones, WiFi, cars, appliances, and more.",
   keywords: [
-    "tech support",
-    "diagnostic tool",
     "troubleshooting",
-    "laptop won't charge",
+    "diagnostic tool",
+    "tech support",
+    "why isn't it working",
+    "how to fix",
+    "repair guide",
+    "laptop not charging",
+    "phone overheating",
     "wifi disconnecting",
     "car won't start",
+    "ac not cooling",
+    "computer running slow",
   ],
+  authors: [{ name: "Why Isn't It Working?" }],
+  creator: "Why Isn't It Working?",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: "Why Isn't It Working?",
+    title: "Why Isn't It Working? - Tech Diagnostic & Troubleshooting Tool",
+    description: "Tell us what's not working and we'll help you figure out why. Free diagnostic tool for laptops, phones, WiFi, cars, appliances, and more.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Why Isn't It Working? - Tech Diagnostic & Troubleshooting Tool",
+    description: "Tell us what's not working and we'll help you figure out why. Free diagnostic tool for laptops, phones, WiFi, cars, appliances, and more.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
 };
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/problems", label: "Problems" },
-  { href: "/categories", label: "Categories" },
+  { href: "/blog", label: "Blog" },
+  { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
-  { href: "/safety", label: "Safety" },
 ];
 
 export default function RootLayout({
@@ -48,6 +86,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className="min-h-full flex flex-col bg-gray-50 text-gray-900">
         <header className="border-b border-gray-200 bg-white">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
@@ -78,17 +119,17 @@ export default function RootLayout({
                 <Link href="/about" className="hover:text-gray-900">
                   About
                 </Link>
-                <Link href="/safety" className="hover:text-gray-900">
-                  Safety
+                <Link href="/blog" className="hover:text-gray-900">
+                  Blog
+                </Link>
+                <Link href="/faq" className="hover:text-gray-900">
+                  FAQ
                 </Link>
                 <Link href="/privacy" className="hover:text-gray-900">
                   Privacy
                 </Link>
                 <Link href="/terms" className="hover:text-gray-900">
                   Terms
-                </Link>
-                <Link href="/disclaimer" className="hover:text-gray-900">
-                  Disclaimer
                 </Link>
                 <Link href="/contact" className="hover:text-gray-900">
                   Contact
