@@ -134,19 +134,22 @@ export async function generateDiagnosticTree(
   // 3. Parse and validate
   const raw = parseAIResponse(response.content);
   if (!raw) {
-    console.error("Failed to parse AI response as JSON");
+    console.error("Failed to parse AI response as JSON. Raw content:", response.content.substring(0, 500));
     return null;
   }
 
   const validation = validateAITree(raw);
   if (!validation.valid) {
-    console.error("AI tree validation failed:", validation.errors);
+    console.error("AI tree validation failed:", validation.errors, "Raw:", JSON.stringify(raw).substring(0, 500));
     return null;
   }
 
   // 4. Transform to our types
   const tree = transformAITree(raw);
-  if (!tree) return null;
+  if (!tree) {
+    console.error("Failed to transform AI tree. Raw:", JSON.stringify(raw).substring(0, 500));
+    return null;
+  }
 
   // 5. Cache the result
   await setCachedTree(query, tree.problem, tree.nodes, tree.causes);
