@@ -89,7 +89,6 @@ class GeminiProvider implements AIProvider {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error("[GEMINI ERROR]", response.status, JSON.stringify(errorData));
         return {
           content: "",
           success: false,
@@ -98,11 +97,9 @@ class GeminiProvider implements AIProvider {
       }
 
       const data = await response.json();
-      console.log("[GEMINI RESPONSE]", JSON.stringify(data).substring(0, 500));
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
       if (!text) {
-        console.error("[GEMINI NO TEXT]", JSON.stringify(data).substring(0, 500));
         return {
           content: "",
           success: false,
