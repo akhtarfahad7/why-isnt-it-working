@@ -124,6 +124,8 @@ export async function generateDiagnosticTree(
 
   const response = await provider.chat(messages);
 
+  console.log("[AI RESPONSE] success:", response.success, "error:", response.error, "content length:", response.content?.length);
+
   if (!response.success || !response.content) {
     console.error("AI generation failed:", response.error);
     return null;
