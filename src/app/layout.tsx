@@ -87,6 +87,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
+	<meta name="google-site-verification" content="KZgzlZS0MLQ9hHs7mHBWgDauq9oVCXbOGp9FCr17j-c" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="min-h-full flex flex-col bg-gray-50 text-gray-900">
