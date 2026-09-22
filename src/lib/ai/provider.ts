@@ -34,7 +34,7 @@ class GeminiProvider implements AIProvider {
 
   constructor() {
     this.apiKey = process.env.GOOGLE_AI_API_KEY ?? "";
-    this.model = process.env.GEMINI_MODEL ?? "gemini-3.5-flash-lite";
+    this.model = process.env.GEMINI_MODEL ?? "gemini-3.1-flash-lite";
   }
 
   async chat(messages: AIMessage[]): Promise<AIResponse> {
@@ -57,29 +57,35 @@ class GeminiProvider implements AIProvider {
 
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent`;
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": this.apiKey,
-        },
-        body: JSON.stringify({
-          contents,
-          systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined,
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 2048,
-            topP: 0.8,
-            topK: 40,
+      let response: Response | null = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": this.apiKey,
           },
-          safetySettings: [
-            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-            { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
-            { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
-          ],
-        }),
-      });
+          body: JSON.stringify({
+            contents,
+            systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined,
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 2048,
+              topP: 0.8,
+              topK: 40,
+            },
+            safetySettings: [
+              { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+              { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+              { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+              { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
+            ],
+          }),
+        });
+        if (response.ok) break;
+        if (attempt < 2) await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+      }
+      response = response!;
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
