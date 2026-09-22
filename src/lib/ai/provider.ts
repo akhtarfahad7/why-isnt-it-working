@@ -58,41 +58,51 @@ class GeminiProvider implements AIProvider {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent`;
 
       let response: Response | null = null;
-      for (let attempt = 0; attempt < 3; attempt++) {
-        response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": this.apiKey,
-          },
-          body: JSON.stringify({
-            contents,
-            systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined,
-            generationConfig: {
-              temperature: 0.3,
-              maxOutputTokens: 2048,
-              topP: 0.8,
-              topK: 40,
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 15000);
+        try {
+          response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": this.apiKey,
             },
-            safetySettings: [
-              { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-              { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-              { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
-              { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
-            ],
-          }),
-        });
-        if (response.ok) break;
-        if (attempt < 2) await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+            body: JSON.stringify({
+              contents,
+              systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined,
+              generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 2048,
+                topP: 0.8,
+                topK: 40,
+              },
+              safetySettings: [
+                { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+                { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+                { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" },
+              ],
+            }),
+            signal: controller.signal,
+          });
+          clearTimeout(timeout);
+          if (response.ok) break;
+        } catch (e) {
+          clearTimeout(timeout);
+          console.error(`Gemini attempt ${attempt + 1} failed:`, e instanceof Error ? e.message : e);
+        }
+        if (attempt < 4) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
       }
       response = response!;
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+      if (!response || !response.ok) {
+        const status = response?.status ?? 0;
+        const errorData = response ? await response.json().catch(() => ({})) : {};
         return {
           content: "",
           success: false,
-          error: `Gemini API error: ${response.status} - ${errorData.error?.message ?? "Unknown error"}`,
+          error: `Gemini API error: ${status} - ${errorData.error?.message ?? "All retry attempts failed"}`,
         };
       }
 
